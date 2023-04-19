@@ -110,7 +110,7 @@ export class ColumnMetadata {
     /**
      * Specifies generation strategy if this column will use auto increment.
      */
-    generationStrategy?: "uuid" | "increment" | "rowid"
+    generationStrategy?: "uuid" | "ulid" | "increment" | "rowid"
 
     /**
      * Identity column type. Supports only in Postgres 10+.

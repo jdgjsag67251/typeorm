@@ -601,6 +601,8 @@ export class OracleDriver implements Driver {
             return "blob"
         } else if (column.type === "uuid") {
             return "varchar2"
+        } else if (column.type === "ulid") {
+            return "varchar2"
         } else if (column.type === "simple-array") {
             return "clob"
         } else if (column.type === "simple-json") {
@@ -663,6 +665,7 @@ export class OracleDriver implements Driver {
             case "raw":
                 return "2000"
             case "uuid":
+            case "ulid":
                 return "36"
             default:
                 return ""
@@ -797,6 +800,7 @@ export class OracleDriver implements Driver {
                 tableColumn.isUnique !==
                     this.normalizeIsUnique(columnMetadata) ||
                 (columnMetadata.generationStrategy !== "uuid" &&
+                    columnMetadata.generationStrategy !== "ulid" &&
                     tableColumn.isGenerated !== columnMetadata.isGenerated)
 
             // DEBUG SECTION

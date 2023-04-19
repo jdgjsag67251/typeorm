@@ -198,6 +198,9 @@ export type SimpleColumnType =
     | "cube" // postgres
     | "ltree" // postgres
 
+    // database agnostic
+    | "ulid"
+
 /**
  * Any column type column can be.
  */

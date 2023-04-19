@@ -968,7 +968,8 @@ export class MysqlQueryRunner extends BaseQueryRunner implements QueryRunner {
 
         if (
             (newColumn.isGenerated !== oldColumn.isGenerated &&
-                newColumn.generationStrategy !== "uuid") ||
+                newColumn.generationStrategy !== "uuid" &&
+                newColumn.generationStrategy !== "ulid") ||
             oldColumn.type !== newColumn.type ||
             oldColumn.length !== newColumn.length ||
             (oldColumn.generatedType &&

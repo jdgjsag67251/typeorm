@@ -609,6 +609,8 @@ export class SqlServerDriver implements Driver {
             return "binary"
         } else if (column.type === "uuid") {
             return "uniqueidentifier"
+        } else if (column.type === "ulid") {
+            return "nvarchar"
         } else if (
             column.type === "simple-array" ||
             column.type === "simple-json"

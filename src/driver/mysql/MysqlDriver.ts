@@ -722,6 +722,8 @@ export class MysqlDriver implements Driver {
             return "tinyint"
         } else if (column.type === "uuid") {
             return "varchar"
+        } else if (column.type === "ulid") {
+            return "varchar"
         } else if (column.type === "json" && this.options.type === "mariadb") {
             /*
              * MariaDB implements this as a LONGTEXT rather, as the JSON data type contradicts the SQL standard,
@@ -827,6 +829,8 @@ export class MysqlDriver implements Driver {
          * fix https://github.com/typeorm/typeorm/issues/1139
          */
         if (column.generationStrategy === "uuid") return "36"
+
+        if (column.generationStrategy === "ulid") return "36"
 
         switch (column.type) {
             case String:
@@ -1017,6 +1021,7 @@ export class MysqlDriver implements Driver {
                 tableColumn.isUnique !==
                     this.normalizeIsUnique(columnMetadata) ||
                 (columnMetadata.generationStrategy !== "uuid" &&
+                    columnMetadata.generationStrategy !== "ulid" &&
                     tableColumn.isGenerated !== columnMetadata.isGenerated)
 
             // DEBUG SECTION

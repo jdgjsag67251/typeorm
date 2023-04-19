@@ -669,6 +669,8 @@ export class AuroraMysqlDriver implements Driver {
             return "tinyint"
         } else if (column.type === "uuid") {
             return "varchar"
+        } else if (column.type === "ulid") {
+            return "varchar"
         } else if (
             column.type === "simple-array" ||
             column.type === "simple-json"
@@ -768,6 +770,8 @@ export class AuroraMysqlDriver implements Driver {
          * fix https://github.com/typeorm/typeorm/issues/1139
          */
         if (column.generationStrategy === "uuid") return "36"
+
+        if (column.generationStrategy === "ulid") return "36"
 
         switch (column.type) {
             case String:
@@ -934,7 +938,8 @@ export class AuroraMysqlDriver implements Driver {
             let columnMetadataLength = columnMetadata.length
             if (
                 !columnMetadataLength &&
-                columnMetadata.generationStrategy === "uuid"
+                (columnMetadata.generationStrategy === "uuid" ||
+                    columnMetadata.generationStrategy === "ulid")
             ) {
                 // fixing #3374
                 columnMetadataLength = this.getColumnLength(columnMetadata)
@@ -969,6 +974,7 @@ export class AuroraMysqlDriver implements Driver {
                 tableColumn.isUnique !==
                     this.normalizeIsUnique(columnMetadata) ||
                 (columnMetadata.generationStrategy !== "uuid" &&
+                    columnMetadata.generationStrategy !== "ulid" &&
                     tableColumn.isGenerated !== columnMetadata.isGenerated)
             )
         })

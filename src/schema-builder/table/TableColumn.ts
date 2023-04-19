@@ -44,7 +44,7 @@ export class TableColumn {
      * Specifies generation strategy if this column will use auto increment.
      * `rowid` option supported only in CockroachDB.
      */
-    generationStrategy?: "uuid" | "increment" | "rowid" | "identity"
+    generationStrategy?: "uuid" | "ulid" | "increment" | "rowid" | "identity"
 
     /**
      * Indicates if column is a primary key.

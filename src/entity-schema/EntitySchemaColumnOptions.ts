@@ -103,7 +103,7 @@ export interface EntitySchemaColumnOptions extends SpatialColumnOptions {
     /**
      * Specifies if this column will use AUTO_INCREMENT or not (e.g. generated number).
      */
-    generated?: true | "increment" | "uuid" | "rowid"
+    generated?: true | "increment" | "uuid" | "ulid" | "rowid"
 
     /**
      * Specifies if column's value must be unique or not.

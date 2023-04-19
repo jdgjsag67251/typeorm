@@ -1853,7 +1853,8 @@ export class CockroachQueryRunner
 
             if (
                 oldColumn.isGenerated !== newColumn.isGenerated &&
-                newColumn.generationStrategy !== "uuid"
+                newColumn.generationStrategy !== "uuid" &&
+                newColumn.generationStrategy !== "ulid"
             ) {
                 if (newColumn.isGenerated) {
                     if (newColumn.generationStrategy === "increment") {

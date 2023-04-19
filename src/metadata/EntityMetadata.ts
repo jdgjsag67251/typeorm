@@ -217,6 +217,11 @@ export class EntityMetadata {
     hasUUIDGeneratedColumns: boolean = false
 
     /**
+     * Indicates if this entity metadata has ulid generated columns.
+     */
+    hasULIDGeneratedColumns: boolean = false
+
+    /**
      * If this entity metadata is a child table of some table, it should have a discriminator value.
      * Used to store a value in a discriminator column.
      */
@@ -1043,7 +1048,9 @@ export class EntityMetadata {
         this.hasUUIDGeneratedColumns =
             this.columns.filter(
                 (column) =>
-                    column.isGenerated || column.generationStrategy === "uuid",
+                    column.isGenerated ||
+                    column.generationStrategy === "uuid" ||
+                    column.generationStrategy === "ulid",
             ).length > 0
         this.propertiesMap = this.createPropertiesMap()
         if (this.childEntityMetadatas)

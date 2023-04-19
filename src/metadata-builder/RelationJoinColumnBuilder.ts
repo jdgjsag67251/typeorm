@@ -210,7 +210,10 @@ export class RelationJoinColumnBuilder {
                                         "aurora-mysql") &&
                                 (referencedColumn.generationStrategy ===
                                     "uuid" ||
-                                    referencedColumn.type === "uuid")
+                                    referencedColumn.type === "uuid" ||
+                                    referencedColumn.generationStrategy ===
+                                        "ulid" ||
+                                    referencedColumn.type === "ulid")
                                     ? "36"
                                     : referencedColumn.length, // fix https://github.com/typeorm/typeorm/issues/3604
                             width: referencedColumn.width,

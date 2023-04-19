@@ -570,6 +570,8 @@ export class SapDriver implements Driver {
             return "blob"
         } else if (column.type === "uuid") {
             return "nvarchar"
+        } else if (column.type === "ulid") {
+            return "nvarchar"
         } else if (
             column.type === "simple-array" ||
             column.type === "simple-json"
@@ -630,6 +632,7 @@ export class SapDriver implements Driver {
         if (column.length) return column.length.toString()
 
         if (column.generationStrategy === "uuid") return "36"
+        if (column.generationStrategy === "ulid") return "36"
 
         switch (column.type) {
             case "varchar":
@@ -773,6 +776,7 @@ export class SapDriver implements Driver {
                 tableColumn.isUnique !==
                     this.normalizeIsUnique(columnMetadata) ||
                 (columnMetadata.generationStrategy !== "uuid" &&
+                    columnMetadata.generationStrategy !== "ulid" &&
                     tableColumn.isGenerated !== columnMetadata.isGenerated)
             )
         })

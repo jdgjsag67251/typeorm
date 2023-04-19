@@ -103,7 +103,10 @@ export class JunctionEntityMetadataBuilder {
                                 this.connection.driver.options.type ===
                                     "aurora-mysql") &&
                             (referencedColumn.generationStrategy === "uuid" ||
-                                referencedColumn.type === "uuid")
+                                referencedColumn.type === "uuid" ||
+                                referencedColumn.generationStrategy ===
+                                    "ulid" ||
+                                referencedColumn.type === "ulid")
                                 ? "36"
                                 : referencedColumn.length, // fix https://github.com/typeorm/typeorm/issues/3604
                         width: referencedColumn.width,
@@ -168,7 +171,10 @@ export class JunctionEntityMetadataBuilder {
                                         "aurora-mysql") &&
                                 (inverseReferencedColumn.generationStrategy ===
                                     "uuid" ||
-                                    inverseReferencedColumn.type === "uuid")
+                                    inverseReferencedColumn.type === "uuid" ||
+                                    inverseReferencedColumn.generationStrategy ===
+                                        "ulid" ||
+                                    inverseReferencedColumn.type === "ulid")
                                     ? "36"
                                     : inverseReferencedColumn.length, // fix https://github.com/typeorm/typeorm/issues/3604
                             width: inverseReferencedColumn.width, // fix https://github.com/typeorm/typeorm/issues/6442

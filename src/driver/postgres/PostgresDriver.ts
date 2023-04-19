@@ -171,6 +171,7 @@ export class PostgresDriver implements Driver {
         "tsvector",
         "tsquery",
         "uuid",
+        "ulid",
         "xml",
         "json",
         "jsonb",

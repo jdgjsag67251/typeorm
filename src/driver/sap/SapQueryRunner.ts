@@ -1053,7 +1053,8 @@ export class SapQueryRunner extends BaseQueryRunner implements QueryRunner {
 
         if (
             (newColumn.isGenerated !== oldColumn.isGenerated &&
-                newColumn.generationStrategy !== "uuid") ||
+                newColumn.generationStrategy !== "uuid" &&
+                newColumn.generationStrategy !== "ulid") ||
             newColumn.type !== oldColumn.type ||
             newColumn.length !== oldColumn.length
         ) {

@@ -412,6 +412,8 @@ export class EntityMetadataBuilder {
                     column.generationStrategy = generated.strategy
                     if (generated.strategy === "uuid") {
                         column.type = "uuid"
+                    } else if (generated.strategy === "ulid") {
+                        column.type = "ulid"
                     } else if (generated.strategy === "rowid") {
                         column.type = "int"
                     } else {
@@ -1019,7 +1021,9 @@ export class EntityMetadataBuilder {
         entityMetadata.hasUUIDGeneratedColumns =
             entityMetadata.columns.filter(
                 (column) =>
-                    column.isGenerated || column.generationStrategy === "uuid",
+                    column.isGenerated ||
+                    column.generationStrategy === "uuid" ||
+                    column.generationStrategy === "ulid",
             ).length > 0
         entityMetadata.createDateColumn = entityMetadata.columns.find(
             (column) => column.isCreateDate,

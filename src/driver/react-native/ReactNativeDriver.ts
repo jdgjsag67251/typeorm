@@ -626,6 +626,8 @@ export class ReactNativeDriver implements Driver {
             return "boolean"
         } else if (column.type === "uuid") {
             return "varchar"
+        } else if (column.type === "ulid") {
+            return "varchar"
         } else if (column.type === "simple-array") {
             return "text"
         } else if (column.type === "simple-json") {
@@ -798,6 +800,7 @@ export class ReactNativeDriver implements Driver {
                         columnMetadata.enum.map((val) => val + ""),
                     )) ||
                 (columnMetadata.generationStrategy !== "uuid" &&
+                    columnMetadata.generationStrategy !== "ulid" &&
                     tableColumn.isGenerated !== columnMetadata.isGenerated)
 
             // DEBUG SECTION

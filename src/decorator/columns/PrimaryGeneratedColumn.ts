@@ -5,6 +5,7 @@ import { GeneratedMetadataArgs } from "../../metadata-args/GeneratedMetadataArgs
 import { ColumnOptions } from "../options/ColumnOptions"
 import { PrimaryGeneratedColumnIdentityOptions } from "../options/PrimaryGeneratedColumnIdentityOptions"
 import { ObjectUtils } from "../../util/ObjectUtils"
+import { PrimaryGeneratedColumnULIDOptions } from "../options/PrimaryGeneratedColumnULIDOptions"
 
 /**
  * Column decorator is used to mark a specific class property as a table column.
@@ -38,6 +39,14 @@ export function PrimaryGeneratedColumn(
  * Column decorator is used to mark a specific class property as a table column.
  */
 export function PrimaryGeneratedColumn(
+    strategy: "ulid",
+    options?: PrimaryGeneratedColumnULIDOptions,
+): PropertyDecorator
+
+/**
+ * Column decorator is used to mark a specific class property as a table column.
+ */
+export function PrimaryGeneratedColumn(
     strategy: "rowid",
     options?: PrimaryGeneratedColumnUUIDOptions,
 ): PropertyDecorator
@@ -56,6 +65,7 @@ export function PrimaryGeneratedColumn(
     strategyOrOptions?:
         | "increment"
         | "uuid"
+        | "ulid"
         | "rowid"
         | "identity"
         | PrimaryGeneratedColumnNumericOptions
@@ -68,12 +78,13 @@ export function PrimaryGeneratedColumn(
 ): PropertyDecorator {
     // normalize parameters
     const options: ColumnOptions = {}
-    let strategy: "increment" | "uuid" | "rowid" | "identity"
+    let strategy: "increment" | "uuid" | "ulid" | "rowid" | "identity"
     if (strategyOrOptions) {
         if (typeof strategyOrOptions === "string")
             strategy = strategyOrOptions as
                 | "increment"
                 | "uuid"
+                | "ulid"
                 | "rowid"
                 | "identity"
 
@@ -93,6 +104,8 @@ export function PrimaryGeneratedColumn(
                 options.type = Number
             } else if (strategy === "uuid") {
                 options.type = "uuid"
+            } else if (strategy === "ulid") {
+                options.type = "ulid"
             } else if (strategy === "rowid") {
                 options.type = "int"
             }

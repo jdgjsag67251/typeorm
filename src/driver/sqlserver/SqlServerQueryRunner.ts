@@ -1229,7 +1229,8 @@ export class SqlServerQueryRunner
 
         if (
             (newColumn.isGenerated !== oldColumn.isGenerated &&
-                newColumn.generationStrategy !== "uuid") ||
+                newColumn.generationStrategy !== "uuid" &&
+                newColumn.generationStrategy !== "ulid") ||
             newColumn.type !== oldColumn.type ||
             newColumn.length !== oldColumn.length ||
             newColumn.asExpression !== oldColumn.asExpression ||

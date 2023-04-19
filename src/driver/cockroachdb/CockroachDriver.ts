@@ -157,6 +157,7 @@ export class CockroachDriver implements Driver {
         "json",
         "jsonb",
         "uuid",
+        "ulid",
     ]
 
     /**
@@ -626,7 +627,7 @@ export class CockroachDriver implements Driver {
         scale?: number
         isArray?: boolean
         isGenerated?: boolean
-        generationStrategy?: "increment" | "uuid" | "rowid"
+        generationStrategy?: "increment" | "uuid" | "ulid" | "rowid"
     }): string {
         if (
             column.type === Number ||

@@ -1,4 +1,5 @@
 import { v4 as uuidv4 } from "uuid"
+import { ulid } from "ulid"
 import { EntityTarget } from "../common/EntityTarget"
 import { ObjectLiteral } from "../common/ObjectLiteral"
 import { AuroraMysqlDriver } from "../driver/aurora-mysql/AuroraMysqlDriver"
@@ -787,14 +788,18 @@ export class InsertQueryBuilder<
                         // } else if (column.isCreateDate || column.isUpdateDate) {
                         //     return "CURRENT_TIMESTAMP";
 
-                        // if column is generated uuid and database does not support its generation and custom generated value was not provided by a user - we generate a new uuid value for insertion
+                        // if column is generated uuid/ulid and database does not support its generation and custom generated value was not provided by a user - we generate a new uuid/ulid value for insertion
                     } else if (
                         column.isGenerated &&
-                        column.generationStrategy === "uuid" &&
-                        !this.connection.driver.isUUIDGenerationSupported() &&
-                        value === undefined
+                        value === undefined &&
+                        ((column.generationStrategy === "uuid" &&
+                            !this.connection.driver.isUUIDGenerationSupported()) ||
+                            column.generationStrategy === "ulid")
                     ) {
-                        value = uuidv4()
+                        value =
+                            column.generationStrategy === "ulid"
+                                ? ulid()
+                                : uuidv4()
                         expression += this.createParameter(value)
 
                         if (

@@ -465,7 +465,11 @@ export class SpannerDriver implements Driver {
     }): string {
         if (column.type === Number) {
             return "int64"
-        } else if (column.type === String || column.type === "uuid") {
+        } else if (
+            column.type === String ||
+            column.type === "uuid" ||
+            column.type === "ulid"
+        ) {
             return "string"
         } else if (column.type === Date) {
             return "timestamp"
@@ -507,6 +511,7 @@ export class SpannerDriver implements Driver {
     getColumnLength(column: ColumnMetadata | TableColumn): string {
         if (column.length) return column.length.toString()
         if (column.generationStrategy === "uuid") return "36"
+        if (column.generationStrategy === "ulid") return "36"
 
         switch (column.type) {
             case String:

@@ -164,7 +164,9 @@ export class EntityMetadataValidator {
         ) {
             const generatedColumns = entityMetadata.columns.filter(
                 (column) =>
-                    column.isGenerated && column.generationStrategy !== "uuid",
+                    column.isGenerated &&
+                    column.generationStrategy !== "uuid" &&
+                    column.generationStrategy !== "ulid",
             )
             if (generatedColumns.length > 1)
                 throw new TypeORMError(
